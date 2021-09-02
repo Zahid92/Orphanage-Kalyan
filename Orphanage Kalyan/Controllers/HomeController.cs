@@ -15,7 +15,8 @@ namespace Orphanage_Kalyan.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "About us.";
+            ViewBag.Message = " Connecting helping hands and needful ";
+           
 
             return View();
         }

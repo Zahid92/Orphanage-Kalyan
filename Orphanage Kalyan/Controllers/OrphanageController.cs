@@ -4,9 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Orphanage_Kalyan.Models;
-
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Orphanage_Kalyan.Controllers
 {
@@ -62,11 +65,22 @@ namespace Orphanage_Kalyan.Controllers
                     //{
                     //    return RedirectToAction("Index");
                     //}
+                    using(var cnt= new HttpClient())
+                    {
+                        cnt.BaseAddress = new Uri("");
+                        cnt.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                        HttpResponseMessage msg = cnt.PostAsync("api/Register", new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json")).Result;
+                        if (msg.IsSuccessStatusCode)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    return null;
+                    return RedirectToAction("Index");
                 }
                 // TODO: Add insert logic here
 
